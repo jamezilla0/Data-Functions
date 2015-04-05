@@ -1,34 +1,35 @@
 <?php
-	require_once($_SERVER['DOCUMENT_ROOT'].'/class/array.php');
-	require_once($_SERVER['DOCUMENT_ROOT'].'/functions/json.php');
-
 	//This holds config variables for DB etc. DO not edit if linked to remote
 	require_once($_SERVER['DOCUMENT_ROOT'].'/constants/admin.php'); 
-
- 	require_once($_SERVER['DOCUMENT_ROOT'].'/constants/modules.php');
-  	require_once($_SERVER['DOCUMENT_ROOT'].'/constants/classes.php');
 	class data
 	{
+		//Database user login
 		private $user = DB_user;
+		//Database password login
 		private $pass = DB_pass;
+		//Database server host
 		private $host = DB_host;
+		//Database server port 
 		private $port = DB_port;
+		//Database name
 		private $dbname = DB_name;
-		public $date;
-
+		//We can easily use order by or limit number of times
 		public $limit = '';
+		//Do we log the querys?
 		public $testQ = true;
-
+		//If you have an external data object protect it.
 		protected $db;
-
+		//Time stamps
 		public $time;
-
+		//Just in case we need to use any dates
+		public $date;
+		
 		function __construct()
 		{
-
+			//Date format: Year-Month-Day Hour:Minutes:Seconds
 			$this->date = date('Y-m-d H:s:i');
+			//Time in unix miliseconds since Jan 1 1970
 			$this->time = time();
-			$this->array = new arrayFnc();
 
 			try
 			{
