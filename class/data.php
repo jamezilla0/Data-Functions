@@ -38,36 +38,42 @@
 				//Set attribute PDO::ATTR_ERRMODE of ERRMODE_(SILENT: Just set throw error codes, WARNING: Raise E_WARNING's,  EXCEPTION: Throw exceptions)
 				$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			}
-			catch(PDOException $e)
+			catch(PDOException $e) //Catch the exception thats thrown to $e object.
 			{
+				//You can either directly echo the error or send it off to a secure db log.
 				echo $e->getMessage();
+				//Flick the kill switch
 				die();
 			}
 			
 		}
 
-
-		function test($object,$type = "dump", $qTest = true)
+		//Test an object with type and log it to your db_log
+		function test($object,$type = "dump", $qTest = false)
 		{
+			//By default this is false, because once it runs we dont need it to log itself anymore.
 			$this->testQ = $qTest;
-
+			//Switch based on the type of testing we need 
 			switch ($type) {
+				//"dump" allows us to get deep detail of an object
 				case 'dump':
 					ob_start();
 					var_dump($object);
 					$output = ob_get_clean();
 					break;
+				//"print" allows us to get a full view of an array and its subarrays
 				case 'print':
 					$output = print_r($object, true);
 					break;
+				//Sometimes we simply need to output the object itself
 				default:
-					# code...
+					$output = $object;
 					break;
 			}
-			$this->testQ = false;
+			//Lets prepare this for an insert by passing the setter and params through an array of time which sets the time this log was made and the log which shows our output
 			$this->prepareFromArray("test_logs", array("time" => $this->dateTimeStamp(), "log" => $output));
 		}
-
+		
 		function timeStamp()
 		{
 			return date("h:i:s",$this->time);
