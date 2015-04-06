@@ -17,7 +17,7 @@
 		public $limit = '';
 		//Do we log the querys?
 		public $testQ = true;
-		//If you have an external data object protect it.
+		//We do not want this DB object to ever get changed outside.
 		protected $db;
 		//Time stamps
 		public $time;
@@ -30,10 +30,12 @@
 			$this->date = date('Y-m-d H:s:i');
 			//Time in unix miliseconds since Jan 1 1970
 			$this->time = time();
-
+			//Lets try to do a db connection
 			try
 			{
+				//Lets connect to our PDO database via DB Type (mysql , mongo, etc), Host Server, Data Base name, server port, user credentials and password credentials
 				$this->db = new PDO("mysql:host={$this->host};dbname={$this->dbname};port={$this->port}", $this->user, $this->pass);
+				//Set attribute PDO::ATTR_ERRMODE of ERRMODE_(SILENT: Just set throw error codes, WARNING: Raise E_WARNING's,  EXCEPTION: Throw exceptions)
 				$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			}
 			catch(PDOException $e)
