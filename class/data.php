@@ -88,17 +88,26 @@
 		{
 			return date("m/d/y",$this->time);
 		}
-
+		//Make sure any action being triggered is  being validated
 		function validate($action, $from = false)
 		{
+			//If action failed
 			if(!$action)
 			{
+				//Print where it came from
 				print_r($from);
+				//and the error info
 				print_r($this->db->errorInfo());
+				//Log each of those.
+				$this->test($from,'print');
+				$this->test($this->db->errorInfo(),'print');
+				//return false;
 				return false;
 			}
+			//else return true
 			return true;
 		}
+		
 		//use array keys as params and the values as values.
 		function prepareFromArray($table,$param,$for = "insert",$get = 'none', $wherez = false, $orderBy = null)
 		{
