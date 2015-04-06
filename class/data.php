@@ -73,18 +73,18 @@
 			//Lets prepare this for an insert by passing the setter and params through an array of time which sets the time this log was made and the log which shows our output
 			$this->prepareFromArray("test_logs", array("time" => $this->dateTimeStamp(), "log" => $output));
 		}
-		
+		//A method that returns the current time in hh:mm:ss format
 		function timeStamp()
 		{
 			return date("h:i:s",$this->time);
 		}
-
+		//A method that returns the current date and time in Month/Day/Year Hours:Minutes:Seconds format
 		function dateTimeStamp()
 		{
 			return date("m/d/y h:i:s",$this->time);
 		}
-
-		function date()
+		//A method that returns the date alone in month/day/year format
+		function dateStamp()
 		{
 			return date("m/d/y",$this->time);
 		}
